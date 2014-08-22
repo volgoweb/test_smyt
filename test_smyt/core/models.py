@@ -3,20 +3,21 @@ from django.db import models
 import yaml
 from datetime import datetime
 from .utils import get_definition_file_path
+from django.contrib import admin
 
-class ModelClassFactory(object):
+class ModelFactory(object):
     def __init__(self, file_path, *args, **kwargs):
         self.file_path = file_path
         definition_text = open(self.file_path)
         self.definition_dict = self.convert_text_to_dict(definition_text)
 
-    def get_all_classes(self):
+    def get_all_model_classes(self):
         classes = []
         for class_name in self.definition_dict:
-            classes.append(self.get_class(class_name))
+            classes.append(self.get_model_class(class_name))
         return classes
 
-    def get_class(self, class_name):
+    def get_model_class(self, class_name):
         cls_definition = self.definition_dict.get(class_name)
 
         fields = self.get_fields(cls_definition.get('fields'))
@@ -61,12 +62,20 @@ class ModelClassFactory(object):
     def get_date_field(self, field_definition):
         return models.DateField(verbose_name = field_definition.get('title'))
 
-class ModelClassFactoryYaml(ModelClassFactory):
+    def get_admin_class(self, model_class):
+        m_cls_name = model_class.__name__
+        admin_class_name = '{0}Admin'.format(model_class.__name__)
+        attrs = {
+            'list_display': ['id',]
+        }
+        return type(admin_class_name, (admin.ModelAdmin,), attrs)
+
+class ModelFactoryYaml(ModelFactory):
     def convert_text_to_dict(self, definition_text):
         return yaml.load(definition_text)
 
 file_path = get_definition_file_path()
-factory = ModelClassFactoryYaml(file_path)
-for cls in factory.get_all_classes():
+factory = ModelFactoryYaml(file_path)
+for cls in factory.get_all_model_classes():
     cls
 
