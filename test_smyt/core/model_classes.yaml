@@ -1,0 +1,13 @@
+task:
+    title: Задача
+    fields:
+        - {id: title, title: Заголовок, type: char}     
+        - {id: priority, title: Приоритет, type: int}
+        - {id: due_date, title: Дата окончания, type: date}
+
+    
+project:
+    title: Проект
+    fields:
+        - {id: name, title: Название, type: char}     
+        - {id: tasks_count, title: Количество задач, type: int}
