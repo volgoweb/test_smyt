@@ -5,6 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'test_smyt.views.index', name='index'),
+    url(r'^tasks/', include('test_smyt.core.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )
