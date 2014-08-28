@@ -47,27 +47,36 @@ class BackboneView(View):
 
     @csrf_exempt
     def put(self, request, id = None, **kwargs):
-        print 'id={0}'.format(id)
-        print 'POST priority={0}'.format(request.POST.get('priority'))
-        print 'GET priority={0}'.format(request.GET.get('priority'))
-        print 'title={0}'.format(request.POST.get('title'))
         if id:
             obj = get_object_or_404(self.queryset(request), id = id)
             return self.update_object(request, obj)
         else:
-            HttpResponseForbidden()
+            return self.add_object(request)
 
-    def update_object(self, request, obj):
+    def get_data_from_request(self, request):
         try:
-            data = json.loads(request.body if hasattr(request, 'body') else request.raw_post_data)
+            return json.loads(request.body if hasattr(request, 'body') else request.raw_post_data)
         except ValueError:
             return HttpResponseBadRequest('Parse JSON error.')
-        model_form = self.get_model_form(request, data = data, instance = obj)
+
+    @csrf_exempt
+    def add_object(self, request):
+        data = self.get_data_from_request(request)
+        model_form = self.get_model_form(request, data = data)
         if model_form.is_valid():
-            model_form.save()
+            obj = model_form.save()
             return self.get_object_detail(request, obj)
         else:
-            return HttpResponseBadRequest(self.json_dumps(form.errors), content_type='application/json')
+            return HttpResponseBadRequest(json.dumps(model_form.errors), content_type='application/json')
+
+    def update_object(self, request, obj):
+        data = self.get_data_from_request(request)
+        model_form = self.get_model_form(request, data = data, instance = obj)
+        if model_form.is_valid():
+            obj = model_form.save()
+            return self.get_object_detail(request, obj)
+        else:
+            return HttpResponseBadRequest(json.dumps(model_form.errors), content_type='application/json')
 
     def get_model_form(self, request, data = None, instance = None):
         model_form = modelform_factory(self.model)

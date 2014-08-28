@@ -1,22 +1,41 @@
 
 <script type="text/template" id="task-item-template">
     <td>
-      <%- id %>
-      <input type="hidden" class="edit-id" name="id" value="<%- id %>">
-      {% csrf_token %}
+      <span class="field-view">
+        <%- id %>
+      </span>
+      <span class="field-edit">
+        <input type="hidden" class="edit-id" name="id" value="<%- id %>">
+      </span>
     </td>
+
     <td>
-      <%- title %>
-      <input type="text" class="edit-title" name="title" value="<%- title %>">
+      <span class="field-view">
+        <%- title %>
+      </span>
+      <span class="field-edit">
+        <input type="text" class="edit-title" name="title" value="<%- title %>">
+      </span>
     </td>
+    
     <td>
-      <%- priority %>
-      <input type="text" class="edit-priority" name="priority" value="<%- priority %>">
+      <span class="field-view">
+        <%- priority %>
+      </span>
+      <span class="field-edit">
+        <input type="text" class="edit-priority" name="priority" value="<%- priority %>">
+      </span>
     </td>
+    
     <td>
-      <%- due_date %>
-      <input type="text" class="edit-due_date" name="due_date" value="<%- due_date %>">
+      <span class="field-view">
+        <%- due_date %>
+      </span>
+      <span class="field-edit">
+        <input type="text" class="edit-due_date" name="due_date" value="<%- due_date %>">
+      </span>
     </td>
+
     <td>
       <button class="edit-btn">Edit</button>
       <button class="save-btn">Save</button>
