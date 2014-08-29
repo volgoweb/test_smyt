@@ -105,7 +105,7 @@ class TasksList(ListView):
     context_object_name = 'models'
 
 def tasks_list(request):
-    return render(request, 'core/list_edit_in_place.html', {})
+    return render(request, 'core/models_list.html', {})
 
 def get_task_collection(request):
     Task = factory.get_model_class('task')

@@ -48,6 +48,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # 'south',
+    'less',
+    'compressor',
 
     'test_smyt.core',
 )
@@ -105,5 +107,19 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+    'less.finders.LessFinder',
+)
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
+COMPRESS_ROOT = os.path.join(PROJECT_DIR, "static", "less")
+COMPRESS_URL = STATIC_URL + 'less/'

@@ -1,9 +1,16 @@
 {% load staticfiles %}
+{% load compress %}
 
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <title>Test SMYT</title>
+
+        {% compress css %}
+            {% block less %}
+                <link rel="stylesheet" type="text/less" media="all" href="{% static "less/style.less" %}" />
+            {% endblock %}
+        {% endcompress %}
 
         {% block js %}
           <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
