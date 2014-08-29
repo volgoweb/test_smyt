@@ -5,34 +5,17 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <title>Test SMYT</title>
 
-        <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/underscore.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/require.js' %}"></script>
-        {# <script type="text/javascript" src="{% static 'js/backbone-min.js' %}"></script> #}
-        <script type="text/javascript" src="{% static 'js/backbone.js' %}"></script>
-        <script type="text/javascript">
-          // using jQuery
-          function getCookie(name) {
-              var cookieValue = null;
-              if (document.cookie && document.cookie != '') {
-                  var cookies = document.cookie.split(';');
-                  for (var i = 0; i < cookies.length; i++) {
-                      var cookie = jQuery.trim(cookies[i]);
-                      // Does this cookie string begin with the name we want?
-                      if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                          break;
-                      }
-                  }
-              }
-              return cookieValue;
-          }
+        {% block js %}
+          <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+          <script type="text/javascript" src="{% static 'js/underscore.js' %}"></script>
+          <script type="text/javascript" src="{% static 'js/require.js' %}"></script>
+          {# <script type="text/javascript" src="{% static 'js/backbone-min.js' %}"></script> #}
+          <script type="text/javascript" src="{% static 'js/backbone.js' %}"></script>
+          <script type="text/javascript" src="{% static 'core/js/global_ajax_csrf.js' %}"></script>
+        {% endblock %}
 
-          var test_smyt = {
-            csrf_token: getCookie('csrftoken'),
-          };
-        </script>
-        <script type="text/javascript" src="{% static 'core/js/global_ajax_csrf.js' %}"></script>
+        {% block css %}
+        {% endblock %}
     </head>
     <body>
       {% block content %}

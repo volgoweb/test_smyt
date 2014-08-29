@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.views.generic import ListView
 from .models import *
+from .utils import *
 import json
 from django.views.generic import View
 import datetime
@@ -81,6 +82,19 @@ class BackboneView(View):
     def get_model_form(self, request, data = None, instance = None):
         model_form = modelform_factory(self.model)
         return model_form(data, instance = instance)
+
+def get_models_structures(request):
+    # TODO добавить проверку на аякс
+    structure = {}
+    for cls in factory.get_all_model_classes():
+        fields = cls._meta.fields
+        cls_name = cls.__name__
+        structure[cls_name] = {}
+        for f in fields:
+            structure[cls_name].update({
+                f.name: get_model_field_class_for_js(f),
+            })
+    return HttpResponse(json.dumps(structure), mimetype = 'application/json')
 
 
 
