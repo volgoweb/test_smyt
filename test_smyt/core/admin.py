@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import *
+from models import *
 
 file_path = get_definition_file_path()
 factory = ModelFactoryYaml(file_path)

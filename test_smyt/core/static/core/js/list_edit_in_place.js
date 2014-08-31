@@ -61,7 +61,7 @@ app.activate_model = function() {
      */
     app.collections.Collection = Backbone.Collection.extend({
       model: app.models.Model,
-      url: '/core/json/' + app.chosen_model_name + '/',
+      url: '/json/' + app.chosen_model_name + '/',
     });
 
     app.collections.collection = new app.collections.Collection();
@@ -96,9 +96,6 @@ app.activate_model = function() {
         });
         var html = this.template(tpl_vars);
 
-        $('.date-form-field').not('.processed').datepicker({format: 'dd.mm.yyyy'});
-        $('.date-form-field').addClass('processed');
-
         this.$el.html(html);
 
         var that = this
@@ -112,6 +109,7 @@ app.activate_model = function() {
 
       edit: function() {
         this.$el.addClass('editing');
+        $('.date-form-field').datepicker({format: 'dd.mm.yyyy'});
       },
 
       save: function() {
@@ -145,6 +143,8 @@ app.activate_model = function() {
         this.listenTo(app.collections.collection, 'all', this.render);
 
         app.collections.collection.fetch();
+
+        $('.date-form-field').datepicker({format: 'dd.mm.yyyy'});
       },
 
       addOne: function(model) {
@@ -194,7 +194,7 @@ app.activate_model = function() {
  */
 function get_models_structures() {
   $.ajax({
-    url: '/core/json/models-structure/',
+    url: '/json/models-structure/',
     type: 'GET',
     success: function(data) {
       app.models_structures = data;
