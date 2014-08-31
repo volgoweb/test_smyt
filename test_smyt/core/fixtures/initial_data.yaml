@@ -1,0 +1,19 @@
+
+- model: core.task
+  pk: 1
+  fields:
+    title: only a test
+    priority: 1
+    due_date: 2014-09-01
+- model: core.task
+  pk: 2
+  fields:
+    title: only a test 2
+    priority: 2
+    due_date: 2014-09-02
+
+- model: core.project
+  pk: 1
+  fields:
+    name: only a test
+    tasks_count: 2
