@@ -1,0 +1,31 @@
+
+.field-view,
+.edit-btn {
+    display: inline-block;
+}
+
+.field-edit,
+.save-btn {
+    display: none;
+}
+
+.editing .field-view,
+.editing .edit-btn {
+    display: none;
+}
+
+.editing .field-edit,
+.editing .save-btn {
+    display: inline-block;
+}
+
+.models-list li {
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: silver;
+    font-weight: bold;
+}
