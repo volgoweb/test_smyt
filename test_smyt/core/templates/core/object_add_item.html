@@ -1,0 +1,11 @@
+<script type="text/template" id="object-add-item-template">
+    <% _.each(fields, function(f) { %>
+        <td>
+          {% include "core/object_item_field_input.html" with action="add" %}
+        </td>
+    <% }); %>
+
+    <td>
+      <button id="add-btn" class="btn btn-success">Save</button>
+    </td>
+</script>

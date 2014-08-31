@@ -12,7 +12,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import modelform_factory
 
 class BackboneView(View):
-    model = factory.get_model_class('task')
+    def dispatch(self, request, *args, **kwargs):
+        print 'dispatch:'
+        print args
+        print kwargs
+        if 'model' in kwargs:
+            model_name = str(kwargs.get('model'))
+            print model_name
+            self.model = factory.get_model_class(model_name)
+
+        return super(BackboneView, self).dispatch(request, *args, **kwargs)
+
     def queryset(self, request, **kwargs):
         return self.model.objects.all()
 

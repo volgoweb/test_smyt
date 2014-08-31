@@ -1,0 +1,14 @@
+
+<script type="text/template" id="object-edit-item-template">
+    <% _.each(fields, function(f) { %>
+        <td>
+          {% include "core/object_item_field_view.html" %}
+          {% include "core/object_item_field_input.html" with action="edit" %}
+        </td>
+    <% }); %>
+
+    <td>
+        <button class="edit-btn btn btn-default">Edit</button>
+        <button class="save-btn btn btn-success">Save</button>
+    </td>
+</script>

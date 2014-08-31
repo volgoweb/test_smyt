@@ -3,26 +3,54 @@
 {% load staticfiles %}
 
 {% block js %}
-  {{ super }}
+  {{ block.super }}
+  <script type="text/javascript" src="/admin/jsi18n"></script>
   <script type="text/javascript" src="{% static "admin/js/core.js" %}"></script>
   <script type="text/javascript" src="{% static "admin/js/calendar.js" %}"></script>
   <script type="text/javascript" src="{% static "admin/js/admin/DateTimeShortcuts.js" %}"></script>
   <script type="text/javascript" src="{% static "admin/js/admin/RelatedObjectLookups.js" %}"></script>
+
+  {# <script type="text/javascript" src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" %}"></script> #}
+  <script type="text/javascript" src="{% static "bootstrap-datepicker/js/bootstrap-datepicker.js" %}"></script>
   <script type="text/javascript" src="{% static 'core/js/list_edit_in_place.js' %}"></script>
 {% endblock %}
 
 {% block css %}
-  <link href="{% static 'core/css/list_edit_in_place.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "admin/css/widgets.css" %}" type="text/css" /> 
+  <link rel="stylesheet" href="{% static "core/css/list_edit_in_place.css" %}">
+  {# <link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}"> #}
+  <link rel="stylesheet" href="{% static "bootstrap-datepicker/css/datepicker.css" %}">
 {% endblock %}
 
 {% block content %}
+    <div class="row-fluid">
+      <div class="col-md-3">
+        <h2>Список моделей</h2>
+        <ul class="models-list">
+        </ul>
+      </div>
+      <div class="model-info col-md-9">
+          <div class="model-info__structure">
+              <h2>Структура модели</h2>
+              <div class="model-info-structure__list">
+              </div>
+          </div>
 
-<div class="row-fluid">
-  <div class="col-md-6">
-    <ul class="models-list">
-    </ul>
-  </div>
-  <div class="col-md-6">
-  </div>
-</div>
+          <div class="model-info__objects">
+            
+          </div>
+              <h2>Объекты</h2>
+              <table class="model-info-objects__list">
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+
+          {% include "core/objects_list_headers.html" %}
+          {% include "core/object_edit_item.html" %}
+          {% include "core/object_add_item.html" %}
+          {% include "core/form_field_type_char.html" %}
+          {% include "core/form_field_type_integer.html" %}
+          {% include "core/form_field_type_date.html" %}
+      </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,18 @@
+
+<span class="field-{{ action }}">
+    <% if (f.type == 'char') { %>
+        <input id="<%= f.name %>" type="text" class="{{ action }}-<%= f.name %> form-control" name="<%= f.name %>" value="<%= f.value %>"/>
+    <% } %>
+    <% if (f.type == 'integer') { %>
+        <input id="<%= f.name %>" type="text" class="{{ action }}-<%= f.name %> form-control" name="<%= f.name %>" value="<%= f.value %>"/>
+    <% } %>
+    <% if (f.type == 'date') { %>
+            <div class="input-group date date-form-field">
+                <input id="<%= f.name %>" type="text" class="{{ action }}-<%= f.name %> form-control" name="<%= f.name %>" value="<%= f.value %>"/>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+            </div>
+    <% } %>
+    <% if (f.type == 'id') { %>
+        <input id="<%= f.name %>" type="hidden" class="{{ action }}-<%= f.name %>" name="<%= f.name %>" value="<%= f.value %>"/>
+    <% } %>
+</span>

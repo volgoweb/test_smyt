@@ -13,5 +13,5 @@ def get_model_field_class_for_js(field):
     elif type(field) is models.DateField:
         return 'date'
     elif type(field) is models.AutoField:
-        return 'integer'
+        return 'id'
 

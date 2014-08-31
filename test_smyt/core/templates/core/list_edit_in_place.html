@@ -5,7 +5,7 @@
 {% load staticfiles %}
 
 {% block js %}
-  {{ super }}
+  {{ block.super }}
   <script type="text/javascript" src="{% static "admin/js/core.js" %}"></script>
   <script type="text/javascript" src="{% static "admin/js/calendar.js" %}"></script>
   <script type="text/javascript" src="{% static "admin/js/admin/DateTimeShortcuts.js" %}"></script>

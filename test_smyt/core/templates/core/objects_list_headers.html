@@ -1,0 +1,10 @@
+
+<script type="text/template" id="objects-list-headers-template">
+    <% _.each(model_structure, function(ftype, fname) { %>
+        <th>
+            <% if (ftype != 'id') { %>
+                <%= fname %>
+            <% } %>
+        </th>
+    <% }); %>
+</script>
