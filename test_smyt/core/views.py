@@ -95,7 +95,6 @@ class BackboneView(View):
             data.append(self.get_model_fields(obj))
         return HttpResponse(json.dumps(data))
 
-    @csrf_exempt
     def put(self, request, id = None, **kwargs):
         '''
         Общий метод сохранения существующего или создание нового объекта модели.
@@ -115,7 +114,6 @@ class BackboneView(View):
         except ValueError:
             return HttpResponseBadRequest('Parse JSON error.')
 
-    @csrf_exempt
     def add_object(self, request):
         '''
         Создание новой модели.
