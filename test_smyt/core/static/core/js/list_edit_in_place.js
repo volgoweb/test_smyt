@@ -66,7 +66,6 @@ app.activate_model = function() {
             }
         });
         if (errors.length > 0) {
-            // alert(errors.join("\r\n"));
             return true;
         }
         return false;
@@ -177,7 +176,6 @@ app.activate_model = function() {
       },
 
       createNewModel: function() {
-        console.log('create');
         var values = {};
         var that = this;
         _.each(app.models_structures[app.chosen_model_name], function(ftype, fname) {
@@ -270,11 +268,6 @@ function render_objects_list() {
   });
   $(app.model_list_objects).html('<tr>' + tpl(tpl_vars) + '</tr>');
 
-//   console.log('before unbind:');
-// console.log($._data($('#add-btn'), 'events'));
-//   $('#add-btn').unbind('click');
-//   console.log('after unbind:');
-// console.log($._data($('#add-btn'), 'events'));
   app.activate_model();
 }
 
