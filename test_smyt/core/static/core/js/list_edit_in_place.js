@@ -34,6 +34,15 @@ app.activate_model = function() {
       validate: function(attrs, options) {
         var errors = [];
         _.each(app.models_structures[app.chosen_model_name], function(ftype, fname) {
+            if (ftype == 'id') {
+              return;
+            }
+
+            if (!attrs[fname]) {
+              errors.push(fname + ': поле обязательно для заполнения.');
+              return;
+            }
+
             if (ftype == 'integer') {
                 if (!$.isNumeric(attrs[fname])) {
                     errors.push(fname + ': должно быть числом.');
@@ -115,8 +124,10 @@ app.activate_model = function() {
       },
 
       save: function(event) {
-          $(event.toElement).parents('td').eq(0).removeClass('editing');
-          this.model.save(get_values_from_inputs(this), { validate: true });
+          result = this.model.save(get_values_from_inputs(this), { validate: true });
+          if (result) {
+            $(event.toElement).parents('td').eq(0).removeClass('editing');
+          }
       },
     });
 
@@ -161,20 +172,15 @@ app.activate_model = function() {
       createNewModel: function() {
         var values = {};
         var that = this;
-        var count_not_empty_fields = 0;
         _.each(app.models_structures[app.chosen_model_name], function(ftype, fname) {
             if (that[fname + '_input'] !== undefined) {
                 values[fname] = that[fname + '_input'].val();
-                if (values[fname]) {
-                    count_not_empty_fields++;
-                }
             }
         });
-        if (count_not_empty_fields > 0) {
-            save_result = app.collections.collection.create(values, {wait: true, validate: true,});
-            if (save_result) {
-                this.clearInputs();
-            }
+
+        save_result = app.collections.collection.create(values, {wait: true, validate: true,});
+        if (save_result) {
+            this.clearInputs();
         }
       },
 
