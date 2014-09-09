@@ -1,3 +1,6 @@
+.model-info-objects__list td {
+  vertical-align: top;
+}
 
 .field-view {
   cursor: pointer;
@@ -32,4 +35,9 @@
 .active {
     background-color: silver;
     font-weight: bold;
+}
+
+.error-msg {
+  font-size: 10px;
+  color: red;
 }

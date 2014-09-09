@@ -32,6 +32,8 @@ app.activate_model = function() {
       },
 
       validate: function(attrs, options) {
+        $('.error-msg').html('')
+
         var errors = [];
         _.each(app.models_structures[app.chosen_model_name], function(ftype, fname) {
             if (ftype == 'id') {
@@ -39,13 +41,17 @@ app.activate_model = function() {
             }
 
             if (!attrs[fname]) {
-              errors.push(fname + ': поле обязательно для заполнения.');
+              var err = 'Поле обязательно для заполнения.';
+              add_error_msg(attrs, fname, err);
+              errors.push(err);
               return;
             }
 
             if (ftype == 'integer') {
                 if (!$.isNumeric(attrs[fname])) {
-                    errors.push(fname + ': должно быть числом.');
+                    var err = 'Поле должно быть числом.';
+                    add_error_msg(attrs, fname, err);
+                    errors.push(err);
                 }
             }
             
@@ -53,12 +59,14 @@ app.activate_model = function() {
                 var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
                 var dt = Date.parse(attrs[fname].replace(pattern,'$3-$2-$1'));
                 if (isNaN(dt)) {
-                    errors.push(fname + ': некорректная дата.');
+                    var err = 'Некорректная дата.';
+                    add_error_msg(attrs, fname, err);
+                    errors.push(err);
                 }
             }
         });
         if (errors.length > 0) {
-            alert(errors.join("\r\n"));
+            // alert(errors.join("\r\n"));
             return true;
         }
         return false;
@@ -117,7 +125,6 @@ app.activate_model = function() {
       },
 
       edit: function(event) {
-        console.log('edit');
         $(event.toElement).parents('td').eq(0).addClass('editing');
         $(event.toElement).parents('td').eq(0).find('.field-edit > *').focus();
         $('.date-form-field').datepicker({format: 'dd.mm.yyyy'});
@@ -170,6 +177,7 @@ app.activate_model = function() {
       },
 
       createNewModel: function() {
+        console.log('create');
         var values = {};
         var that = this;
         _.each(app.models_structures[app.chosen_model_name], function(ftype, fname) {
@@ -262,6 +270,11 @@ function render_objects_list() {
   });
   $(app.model_list_objects).html('<tr>' + tpl(tpl_vars) + '</tr>');
 
+//   console.log('before unbind:');
+// console.log($._data($('#add-btn'), 'events'));
+//   $('#add-btn').unbind('click');
+//   console.log('after unbind:');
+// console.log($._data($('#add-btn'), 'events'));
   app.activate_model();
 }
 
@@ -276,4 +289,21 @@ function get_values_from_inputs(obj) {
         }
     });
     return values;
+}
+
+function add_error_msg(values, fname, err_msg) {
+    var action = 'add';
+    if (values['id']) {
+      action = 'edit';
+    }
+    var $errors_container = $('.field-' + action + '-' + fname).find('.error-msg');
+    var old_errors = $errors_container.html();
+    $errors_container.html(old_errors + '<div>' + err_msg + '</div>')
+}
+
+function delete_error_msg(values, fname, err_msg) {
+    var action = 'add';
+    if (values['id']) {
+      action = 'edit';
+    }
 }

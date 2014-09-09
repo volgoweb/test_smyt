@@ -1,7 +1,7 @@
 
-<span class="field-{{ action }}">
+<span class="field-{{ action }} field-{{ action }}-<%= f.name %>">
     <% if (f.type == 'char') { %>
-        <input id="<%= f.name %>" type="text" class="{{ action }}-<%= f.name %> form-control" name="<%= f.name %>" value="<%= f.value %>"/>
+    <input id="{{ action }}-<%= f.name %>" type="text" class="{{ action }}-<%= f.name %> form-control" name="<%= f.name %>" value="<%= f.value %>"/>
     <% } %>
     <% if (f.type == 'integer') { %>
         <input id="<%= f.name %>" type="text" class="{{ action }}-<%= f.name %> form-control" name="<%= f.name %>" value="<%= f.value %>"/>
@@ -15,4 +15,5 @@
     <% if (f.type == 'id') { %>
         <input id="<%= f.name %>" type="hidden" class="{{ action }}-<%= f.name %>" name="<%= f.name %>" value="<%= f.value %>"/>
     <% } %>
+    <div class="error-msg"></div>
 </span>
