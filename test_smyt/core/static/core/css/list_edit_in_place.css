@@ -1,4 +1,8 @@
 
+.field-view {
+  cursor: pointer;
+}
+
 .field-view,
 .edit-btn {
     display: inline-block;

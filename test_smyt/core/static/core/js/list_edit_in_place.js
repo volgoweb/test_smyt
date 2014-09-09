@@ -75,8 +75,8 @@ app.activate_model = function() {
       template: _.template($('#object-edit-item-template').html()),
 
       events: {
-        'click .edit-btn': 'edit',
-        'click .save-btn': 'save',
+        'click td': 'edit',
+        'blur .field-edit > *': 'save',
       },
 
       initialize: function() {
@@ -107,14 +107,16 @@ app.activate_model = function() {
         return this;
       },
 
-      edit: function() {
-        this.$el.addClass('editing');
+      edit: function(event) {
+        console.log('edit');
+        $(event.toElement).parents('td').eq(0).addClass('editing');
+        $(event.toElement).parents('td').eq(0).find('.field-edit > *').focus();
         $('.date-form-field').datepicker({format: 'dd.mm.yyyy'});
       },
 
-      save: function() {
+      save: function(event) {
+          $(event.toElement).parents('td').eq(0).removeClass('editing');
           this.model.save(get_values_from_inputs(this), { validate: true });
-          this.$el.removeClass('editing');
       },
     });
 
